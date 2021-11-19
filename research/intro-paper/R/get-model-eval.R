@@ -12,17 +12,17 @@ library(covidHubUtils)
 
 # find evaluation  ------------------------------------------------------
 # Find latest evaluation
-eval_date <- dir(here("evaluation", "weekly-summary"))
+eval_date <- dir(here("covid19-forecast-hub-europe", "evaluation", "weekly-summary"))
 eval_date <- sort(as.Date(gsub("(evaluation-)|(\\.csv)", "", eval_date)))
 eval_date <- eval_date[length(eval_date)]
-eval_file <- here("evaluation", "weekly-summary", paste0("evaluation-", eval_date, ".csv"))
+eval_file <- here("covid19-forecast-hub-europe", "evaluation", "weekly-summary", paste0("evaluation-", eval_date, ".csv"))
 
 # clean variable names
 clean_variables <- c("inc case" = "Cases", "inc death" = "Deaths")
 
 # get model designations - in order to remove "other" except baseline
 model_desig <- covidHubUtils::get_model_designations(source = "local_hub_repo",
-                                                     hub_repo_path = here()) %>%
+                                                     hub_repo_path = here("covid19-forecast-hub-europe")) %>%
   mutate(designation = case_when(model == "EuroCOVIDhub-baseline" ~ "secondary",
                                  TRUE ~ designation))
 

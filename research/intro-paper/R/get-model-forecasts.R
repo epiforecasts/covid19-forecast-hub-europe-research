@@ -14,7 +14,7 @@ report_date <- Sys.Date()
 
 # all models
 raw_forecasts <- load_forecasts(source = "local_hub_repo", 
-                                hub_repo_path = here(), 
+                                hub_repo_path = here("covid19-forecast-hub-europe"), 
                                 hub = "ECDC") %>%
   # set forecast date to corresponding submission date
   mutate(forecast_date = ceiling_date(forecast_date, "week", week_start = 2) - 1) %>%
@@ -28,7 +28,7 @@ raw_forecasts <- load_forecasts(source = "local_hub_repo",
 
 # Remove "other" designated models, except baseline
 model_desig_other <- get_model_designations(source = "local_hub_repo",
-                                            hub_repo_path = here()) %>%
+                                            hub_repo_path = here("covid19-forecast-hub-europe")) %>%
   filter(designation == "other" & model != "EuroCOVIDhub-baseline") %>%
   pull(model)
 

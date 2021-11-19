@@ -7,10 +7,10 @@ library(dplyr)
 library(tidyr)
 
 # Get latest evaluation dataset ------------------------------------------------
-eval_dates <- dir(here("ensembles", 
+eval_dates <- dir(here("covid19-forecast-hub-europe", "ensembles", 
                       "evaluation", "weekly-summary"))
 eval_dates <- as.Date(gsub("(evaluation-)|(\\.csv)", "", eval_dates))
-eval_file <- here("ensembles", 
+eval_file <- here("covid19-forecast-hub-europe", "ensembles", 
                   "evaluation", "weekly-summary", paste0("evaluation-", eval_dates, ".csv"))
 names(eval_dates) <- eval_file
 

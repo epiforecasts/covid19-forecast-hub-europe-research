@@ -7,12 +7,13 @@ library(dplyr)
 library(tidyr)
 
 # Get latest evaluation dataset ------------------------------------------------
-eval_date <- dir(here("ensembles", 
-                      "evaluation", "weekly-summary"))
+eval_date <- dir(here("covid19-forecast-hub-europe",
+                      "ensembles", "evaluation", "weekly-summary"))
 eval_date <- sort(as.Date(gsub("(evaluation-)|(\\.csv)", "", eval_date)))
 eval_date <- eval_date[length(eval_date)]
-eval_file <- here("ensembles", 
-                  "evaluation", "weekly-summary", paste0("evaluation-", eval_date, ".csv"))
+eval_file <- here("covid19-forecast-hub-europe", 
+                  "ensembles", "evaluation", "weekly-summary", 
+                  paste0("evaluation-", eval_date, ".csv"))
                   
 # Prep dataset ------------------------------------------------------------
 # neater factor labels
