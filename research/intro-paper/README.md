@@ -1,6 +1,4 @@
-[European Covid-19 Forecast Hub](https://github.com/epiforecasts/covid19-forecast-hub-europe) analysis:
-
-#### 1. Describing forecasts and ensembles
+[European Covid-19 Forecast Hub](https://github.com/epiforecasts/covid19-forecast-hub-europe) analysis: **Describing forecasts and ensembles**
 
 _Aims_
 
