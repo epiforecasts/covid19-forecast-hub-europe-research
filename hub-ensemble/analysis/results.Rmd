@@ -1,0 +1,144 @@
+---
+title: "Results"
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+```{r set up, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE, echo = FALSE, 
+                      message = FALSE, warning = FALSE)
+
+# Packages
+library(here)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(forcats)
+library(patchwork)
+library(gghighlight)
+
+# Project
+subproj_dir <- "hub-ensemble/"
+here::i_am(paste0(subproj_dir, "analysis/results.Rmd"))
+
+# Get latest evaluation scores for models
+source(here(subproj_dir, "code", "get-model-eval.R"))
+```
+
+## Component models
+
+Text describing number of models over time.
+
+#### Performance of a median ensemble
+
+```{r}
+#| figure-model-by-location,
+#| fig.cap = "Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), by 
+#|  country, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. Performance measured by
+#|  relative weighted interval score scaled against baseline. Boxplots show interquartile range,
+#|  with outliers as faded points, and ensemble model performance marked by asterisk."
+
+# All model and ensemble performance by boxplot by location at 2 wk horizon
+model_eval_wide %>%
+  # Use 1 week horizon
+  filter(horizon == 2 &
+           location != "Overall" &
+           !grepl("hub-ensemble", model)) %>%
+  # plot structure: boxplot rel wis by location and horizon
+  ggplot(aes(x = location_name, y = rel_wis,
+             colour = target_variable,
+             fill = target_variable)) +
+  geom_boxplot(alpha = 0.8, 
+               outlier.alpha = 0.2) +
+  geom_hline(aes(yintercept = 1), lty = 2) +
+  # add ensemble as extra point
+  geom_point(aes(y = ensemble_rel_wis),
+              size = 2, shape = "asterisk",
+             colour = "grey 10",
+             position = position_dodge(width = 0.8)) +
+  # format
+  ylim(c(0,4)) +
+  labs(x = NULL, y = "Scaled relative WIS across models") +
+  scale_fill_brewer(palette = "Set1") +
+  scale_colour_brewer(palette = "Set1") +
+  facet_grid(rows = vars(target_variable), scales = "free") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+Figure # results text: Weekly ensemble (asterisk) generally among the best models in each country and beating the baseline in most countries
+
+```{r}
+#| figure-model-by-horizon,
+#| fig.cap = "Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), 
+#|  by week ahead horizon,, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. 
+#|  Performance measured by relative weighted interval score scaled against baseline (left) and 
+#|  coverage (right)."
+
+# All models and ensemble performance by line over 1:4 week horizon
+# average scores across locations for each model
+h1_h4 <- model_eval_wide %>%
+  mutate(across(rel_ae:bias, ~ na_if(., Inf))) %>%
+  group_by(model, horizon, target_variable) %>%
+  summarise(mean_wis = mean(rel_wis, na.rm = TRUE),
+            mean_cov50 = mean(cov_50, na.rm = TRUE),
+            mean_cov95 = mean(cov_95, na.rm = TRUE)) %>%
+  mutate(hub = (model == "EuroCOVIDhub-ensemble")) %>%
+  ungroup()
+
+# rel WIS per model by horizon
+plot_model_wis <- h1_h4 %>%
+  ggplot(aes(x = horizon, y = mean_wis, colour = model)) +
+  geom_point() +
+  geom_line() +
+  geom_hline(aes(yintercept = 1), lty = 2, col = "black") +
+  # highlight ensemble in red and add label to plot
+  gghighlight(hub == TRUE, calculate_per_facet = TRUE, use_direct_label = F) +
+  labs(y = "Mean relative WIS", x = NULL) +
+  scale_color_brewer(type = "qual", palette = 6) +
+  facet_wrap(~ target_variable, scales = "fixed") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) 
+
+# Plot coverage by horizon
+plot_model_coverage <- h1_h4 %>%  
+  # show only 0.5 coverage level in plot
+  mutate(expected = 0.5) %>%
+  ggplot(aes(x = horizon, y = mean_cov50, colour = model)) +
+  geom_point() +
+  geom_line() +
+  geom_hline(aes(yintercept = expected), lty = 2, colour = "black") +
+  gghighlight(hub == TRUE, calculate_per_facet = TRUE, use_direct_label = F) +
+  scale_color_brewer(type = "qual", palette = 6) +
+  labs(y = "Coverage", x = "Weeks ahead horizon",
+       fill = NULL, colour = NULL) +
+  facet_wrap(~ target_variable, scales = "fixed") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        strip.text = element_blank(),
+        strip.background = element_blank()) 
+
+# Plot together
+plot_model_wis +
+  plot_model_coverage +
+  plot_layout(nrow = 2)
+```
+
+Figure # results text:
+
+
+## Alternative ensemble methods
+
+``` {r}
+# OR-style plot showing relative impact of different ensemble methods on performance
+```
+Figure # results text:
+
+
+
+

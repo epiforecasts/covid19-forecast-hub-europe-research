@@ -1,0 +1,68 @@
+---
+title: "Results"
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+```{r set up, include=FALSE}
+figure_number <- 0
+```
+
+### Component models
+```{r}
+# Heatmap of models submissions over time
+
+```
+_Figure 1: Number of component forecasts over time for each country_
+
+Among the 34 teams submitting to the hub, 2 teams contributed forecast results from multiple separate models. We added a simple baseline forecast and an ensemble of all submitted forecasts, resulting in a total 41 separate forecasting models. Among these, 61% (25 models) forecast for multiple countries, including 16 models with forecasts for all 32 hub locations. 73% (30 models) submitted forecasts for both incident cases and incident deaths, with a further 6 models forecasting only cases and 5 forecasting only incident death counts. All models forecast for targets one week ahead, with most (85%, 35 models) also forecasting for two weeks ahead. Over 80% of models also forecast three and four week ahead targets.
+
+Forecast methods ranged from data-based machine learning and statistical models to theory-driven structured models, as well as blends of different approaches. Teams also varied in their approach to quantifying uncertainty. Nearly all (95%, 39 models) gave probabilistic forecasts. 37 models always included predictions across the entire pre-specified set of 23 quantiles, including 5 models that expanded to include the full range of uncertainty after initially submitting only the median (point) or a subset of quantile predictions. 2 models submitted only a subset of quantiles, and a further 2 models submitted point forecasts, with the single forecast value assumed to represent the median quantile for each target.
+
+#### Performance of a median ensemble
+
+```{r}
+# All model and ensemble performance by boxplot by location
+```
+
+_Figure 2: Weekly ensemble (asterisk) generally among the best models in each country and beating the baseline in most countries_
+
+We observed that forecasting models displayed wide variability in relative performance forecasting for different locations and for cases and deaths.
+
+```{r}
+# All models and ensemble performance by line over 1:4 week horizon
+```
+_Figure 3:_
+
+Considering performance over horizon, at 1 week the case ensemble was well calibrated (ca. 95/50% nominal coverage); with increasing forecast window this stopped being the case
+
+The death ensemble was well calibrated at the 95% level for all horizons, and under confident for the 50% level, with only slow deterioration with increasing forecast window
+
+Case ensemble stopped outperforming the baseline at 3-4 weeks for cases (discussion point for later: probably not worth considering case forecasts for longer - although Ensemble outperformed baseline for deaths at all horizons considered (up to 4 weeks WIS) with no discernable deterioration in performance.
+
+### Alternative ensemble methods
+
+``` {r}
+# OR-style plot showing relative impact of different ensemble methods on performance
+```
+_Figure 4:_
+
+We created forecasts over the period 2021-03-15 to 2021-08-23. For each week, we created six probabilistic ensemble forecasts of incident weekly case and death counts for 32 countries, forecasting over one through to four weeks (a combined 256 targets). This created 1532 evaluated ensembles, after removing 4 weeks of forecasts in countries reporting data anomalies. We collected forecasts from a total 29 modelling teams. Ensembles taking the simple averages (mean, median) of all forecasts for each week included between 5 and 18 component models over time. The weighted average ensembles used a stricter set of inclusion criteria, reducing the number of component models to between 5 and 17.
+
+##### Relative performance and uncertainty
+
+For the majority of forecast targets, ensembles performed better than the baseline (figure #2). Of the 1532 combinations of the six ensemble methods each forecasting four weeks of case and death counts in 32 countries, 82% performed better than the baseline forecast model. Ensemble forecasts consistently performed better compared to the baseline model when forecasting incident deaths. With a total 766 targets for incident deaths, 96% ensembles outperformed the baseline model. This was 67% of the same number of case targets.
+
+For all ensemble methods, the skill of ensemble forecasts varied from the near to further into the future, relative to the baseline model. For each model this was always a consistent trend in gradually improving or worsening skill over longer horizons. However, the direction of trend varied by the epidemiological target being forecast. Forecasting cases proved more difficult at longer forecast targets than shorter horizons, while the relative skill of ensembles in forecasting incident deaths improved over longer horizons.
+
+When forecasting deaths, ensembles of any model across all horizons typically gave too broad a range of uncertainty (figure #3). This was also true when forecasting case counts at the one-week ahead horizon for both mean and median varieties of ensemble. For both targets, the problem of under confident prediction intervals reduced over longer horizons. This only improved forecasts of incident deaths, with the coverage of the 50% prediction interval the most accurate at four weeks. However, case forecasts became over confident in nearly all locations by the three and four week horizons.
+
+##### Averaging methods
+
+Ensemble forecasts that used any form of median outperformed the baseline model across all horizons and for each of 32 locations. The 766 ensembles using a median outperformed the baseline for 85% targets. Ensembles using the mean were less consistent in performance across countries, while still outperforming the baseline for 79% targets. 
+
+Forecasts for Iceland were a notable outlier, where mean forecasts failed to accurately forecast regardless of the type of mean ensemble used. This includes the worst of any ensemble performance, where the simple mean of forecasts for incident deaths in Iceland at three weeks ahead performed over seven times worse than the baseline forecast.
+
+
