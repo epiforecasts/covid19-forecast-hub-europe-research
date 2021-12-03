@@ -6,6 +6,7 @@ output:
 editor_options:
   chunk_output_type: console
 ---
+
 ```{r set up, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE, echo = FALSE, 
                       message = FALSE, warning = FALSE)
@@ -14,6 +15,8 @@ knitr::opts_chunk$set(eval = TRUE, echo = FALSE,
 library(here)
 library(dplyr)
 library(tidyr)
+library(lubridate)
+library(purrr)
 library(ggplot2)
 library(forcats)
 library(patchwork)
@@ -29,65 +32,67 @@ source(here(subproj_dir, "code", "get-model-eval.R"))
 
 ## Component models
 
-Text describing number of models over time.
+```{r model-description}
+# Note - All model descriptions include the hub ensemble model
+# Evaluation period
+n_weeks <- max(model_eval$n)
+start_date <- format.Date(eval_date - weeks(n_weeks), "%d %B")
+end_date <- format.Date(eval_date, "%d %B %Y")
 
-#### Performance of a median ensemble
+# Number of forecasters
+n_model <- length(unique(model_eval$model))
+n_team <- length(unique(model_eval$team_name))
 
-```{r}
-#| figure-model-by-location,
-#| fig.cap = "Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), by 
-#|  country, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. Performance measured by
-#|  relative weighted interval score scaled against baseline. Boxplots show interquartile range,
-#|  with outliers as faded points, and ensemble model performance marked by asterisk."
+# Number of models with rel wis scores
+n_model_wis <- filter(model_eval, !is.na(rel_wis)) %>%
+  distinct(model) %>% nrow()
 
-# All model and ensemble performance by boxplot by location at 2 wk horizon
-model_eval_wide %>%
-  # Use 1 week horizon
-  filter(horizon == 2 &
-           location != "Overall" &
-           !grepl("hub-ensemble", model)) %>%
-  # plot structure: boxplot rel wis by location and horizon
-  ggplot(aes(x = location_name, y = rel_wis,
-             colour = target_variable,
-             fill = target_variable)) +
-  geom_boxplot(alpha = 0.8, 
-               outlier.alpha = 0.2) +
-  geom_hline(aes(yintercept = 1), lty = 2) +
-  # add ensemble as extra point
-  geom_point(aes(y = ensemble_rel_wis),
-              size = 2, shape = "asterisk",
-             colour = "grey 10",
-             position = position_dodge(width = 0.8)) +
-  # format
-  ylim(c(0,4)) +
-  labs(x = NULL, y = "Scaled relative WIS across models") +
-  scale_fill_brewer(palette = "Set1") +
-  scale_colour_brewer(palette = "Set1") +
-  facet_grid(rows = vars(target_variable), scales = "free") +
-  theme_bw() +
-  theme(legend.position = "none",
-        axis.text.x = element_text(angle = 30, hjust = 1))
+# How often did the ensemble beat any model of all scores?
+n_ensemble <- filter(model_eval, !is_hub) %>%
+  group_by(target_variable) %>%
+  summarise(n = n(),
+            ensemble_beat = sum(ensemble_rel_wis < rel_wis, na.rm = TRUE),
+            p_ensemble_beat = ensemble_beat / n * 100)
+n_model_scores <- map(split(n_ensemble, n_ensemble$target_variable),
+                       ~ .x %>% pull(n))
+n_ensemble_beat <- map(split(n_ensemble, n_ensemble$target_variable),
+                       ~ .x %>% pull(p_ensemble_beat) %>% round(0))
+
+## Not used
+## Across all possible scores, which models never crossed >1 relative to baseline WIS?
+# cross <- model_eval %>%
+#   filter(!is.na(rel_wis)) %>%
+#   group_by(model) %>%
+#   summarise(n_scores = n(),
+#             outperform = 1 - (sum(rel_wis >= 1, na.rm = TRUE)) / n_scores,
+#             n_forecasts = sum(n))
+
 ```
 
-Figure # results text: Weekly ensemble (asterisk) generally among the best models in each country and beating the baseline in most countries
+We scored all forecasts submitted weekly in real time over the `r n_weeks` week period from `r start_date` to `r end_date`. Each week, forecasts could predict incident cases and deaths, for 32 locations over the following 4 weeks, creating 256 possible forecast targets. We received `r n_model` unique forecasting models from `r n_team` separate forecasting teams. We added an ensemble model using all available forecasts for each possible target. 
+
+We used this dataset to create `r nrow(model_eval)` forecasting scores, each summarising a unique combination of model, variable, country, and week ahead horizon. Not all teams forecast for all targets, nor across all quantiles of the predictive distribution for each target. `r n_model_wis` models provided sufficient quantiles that we could evaluate them using the relative weighted interval score (WIS).
+
+The ensemble model performed well compared to each original forecast model score. The ensemble performed better on relative WIS than `r n_ensemble_beat$Cases`% model scores when forecasting cases (n=`r n_model_scores$Cases`), and `r n_ensemble_beat$Deaths` scores for forecasts of incident deaths (n=`r n_model_scores$Cases`).
 
 ```{r}
 #| figure-model-by-horizon,
-#| fig.cap = "Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), 
-#|  by week ahead horizon,, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. 
-#|  Performance measured by relative weighted interval score scaled against baseline (left) and 
-#|  coverage (right)."
+#| fig.cap = "Figure #: Performance of short-term forecasts, by relative 
+#| interval score (relative to a baseline forecast, top) and coverage of the 0.5
+#|  interval (the proportion of observed values that fell within the predicted 
+#| 50% range, bottom). The scores of each model (grey) and ensemble (red) are  
+#| averaged across all forecast targets and shown by one- to four-week ahead horizon."
 
 # All models and ensemble performance by line over 1:4 week horizon
 # average scores across locations for each model
-h1_h4 <- model_eval_wide %>%
-  mutate(across(rel_ae:bias, ~ na_if(., Inf))) %>%
-  group_by(model, horizon, target_variable) %>%
-  summarise(mean_wis = mean(rel_wis, na.rm = TRUE),
+h1_h4 <- model_eval %>%
+  group_by(is_hub, model, horizon, target_variable) %>%
+  summarise(is_hub = any(is_hub),
+            n = n(),
+            mean_wis = mean(rel_wis, na.rm = TRUE),
+            sd_wis = sd(rel_wis, na.rm = TRUE),
             mean_cov50 = mean(cov_50, na.rm = TRUE),
-            mean_cov95 = mean(cov_95, na.rm = TRUE)) %>%
-  mutate(hub = (model == "EuroCOVIDhub-ensemble")) %>%
-  ungroup()
+            mean_cov95 = mean(cov_95, na.rm = TRUE))
 
 # rel WIS per model by horizon
 plot_model_wis <- h1_h4 %>%
@@ -96,7 +101,7 @@ plot_model_wis <- h1_h4 %>%
   geom_line() +
   geom_hline(aes(yintercept = 1), lty = 2, col = "black") +
   # highlight ensemble in red and add label to plot
-  gghighlight(hub == TRUE, calculate_per_facet = TRUE, use_direct_label = F) +
+  gghighlight(is_hub, calculate_per_facet = TRUE, use_direct_label = F) +
   labs(y = "Mean relative WIS", x = NULL) +
   scale_color_brewer(type = "qual", palette = 6) +
   facet_wrap(~ target_variable, scales = "fixed") +
@@ -113,9 +118,9 @@ plot_model_coverage <- h1_h4 %>%
   geom_point() +
   geom_line() +
   geom_hline(aes(yintercept = expected), lty = 2, colour = "black") +
-  gghighlight(hub == TRUE, calculate_per_facet = TRUE, use_direct_label = F) +
+  gghighlight(is_hub, calculate_per_facet = TRUE, use_direct_label = F) +
   scale_color_brewer(type = "qual", palette = 6) +
-  labs(y = "Coverage", x = "Weeks ahead horizon",
+  labs(y = "50% coverage", x = "Weeks ahead horizon",
        fill = NULL, colour = NULL) +
   facet_wrap(~ target_variable, scales = "fixed") +
   theme_bw() +
@@ -127,18 +132,75 @@ plot_model_coverage <- h1_h4 %>%
 plot_model_wis +
   plot_model_coverage +
   plot_layout(nrow = 2)
+
 ```
 
-Figure # results text:
+The ensemble model outperformed the baseline at one week for both cases and deaths (figure #). For horizons longer than one-week ahead, performance depended on the epidemiological target. Using relative WIS, the ensemble stopped outperforming the baseline at three to four weeks for cases. In contrast, the ensemble outperformed the baseline for deaths at all horizons considered (up to four weeks WIS), with no discernible deterioration in performance. We observed similar trends in performance when considering how well the ensemble calibrated to uncertainty. At one week the case ensemble was well calibrated (ca. 50% nominal coverage), but this did not hold with increasing forecast horizon. The death ensemble was well calibrated at the 95% level for all horizons and under confident for the 50% level, with only slow deterioration with increasing forecast horizon.
+
+```{r}
+#| figure-model-by-location,
+#| fig.cap = "Figure #: Performance of short-term forecasts across models and 
+#| median ensemble (asterisk), by country, forecasting cases (top) and deaths 
+#| (bottom) at 2 weeks ahead. Performance measured by relative weighted interval
+#|  score scaled against baseline. Boxplots show interquartile range, with 
+#| outliers as faded points, and ensemble model performance marked by asterisk."
+
+# All model and ensemble performance by boxplot by location at 2 wk horizon
+model_eval %>%
+  # Use 1 week horizon
+  filter(horizon == 2) %>%
+  # plot structure: boxplot rel wis by location and horizon
+  ggplot(aes(x = location_name, y = rel_wis,
+             colour = target_variable,
+             fill = target_variable)) +
+  geom_boxplot(alpha = 0.8, 
+               outlier.alpha = 0.2) +
+  geom_hline(aes(yintercept = 1), lty = 2) +
+  # overlay ensemble as extra point
+  geom_point(aes(y = ensemble_rel_wis),
+              size = 2, shape = "asterisk",
+             colour = "grey 10",
+             position = position_dodge(width = 0.8)) +
+  # format
+  ylim(c(0,4)) +
+  labs(x = NULL, y = "Scaled relative WIS across models") +
+  scale_fill_brewer(palette = "Set1") +
+  scale_colour_brewer(palette = "Set1") +
+  facet_grid(rows = vars(target_variable), scales = "free") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 30, hjust = 1))
+
+# Ensemble relative to IQR for each country
+ensemble_iqr <- model_eval %>%
+  group_by(location, target_variable) %>%
+  summarise(q.25 = quantile(rel_wis, 0.25, na.rm = TRUE),
+            median = median(rel_wis, na.rm = TRUE),
+            q.75 = quantile(rel_wis, 0.75, na.rm = TRUE),
+            ensemble = median(ensemble_rel_wis) < q.25)
+
+```
+
+The ensemble also performed consistently well when forecasting across countries, relative to individual models (figure #).
+
+The median average of the IQR for each country was # for cases and # for deaths.
+
+The ensemble outperformed all models in \# of 32 locations, 
+
+in all locations outperformed the median score of all models. 
+
+the median performance of all models 
+
+Across \# out of \# locations, the median ensemble (figure \#, asterisk) had the best performing relative WIS compared to the baseline.
+
+Model performance varied by country (figure #). Some countries (the UK, Portugal, Belgium) had a much narrower distribution of model scores .
 
 
 ## Alternative ensemble methods
 
-``` {r}
+```{r}
 # OR-style plot showing relative impact of different ensemble methods on performance
 ```
-Figure # results text:
 
-
-
-
+Figure \# results text:
+Models forecasting incident cases had more variable scores than forecasts for incidence of death.

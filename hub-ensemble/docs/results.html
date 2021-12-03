@@ -279,7 +279,7 @@ $(document).ready(function () {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -288,7 +288,7 @@ $(document).ready(function () {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -297,10 +297,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-12-01
+<strong>Last updated:</strong> 2021-12-03
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>hub-ensemble/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -316,12 +316,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -388,16 +388,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtreee89ec26ff54cb4ee6e85f18e7caa74271bd74a72targetblanke89ec26a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/e89ec26ff54cb4ee6e85f18e7caa74271bd74a72" target="_blank">e89ec26</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtree344db967ceb9f2d38121d7e1a298e6c30a245d5btargetblank344db96a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/344db967ceb9f2d38121d7e1a298e6c30a245d5b" target="_blank">344db96</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtreee89ec26ff54cb4ee6e85f18e7caa74271bd74a72targetblanke89ec26a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtree344db967ceb9f2d38121d7e1a298e6c30a245d5btargetblank344db96a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/e89ec26ff54cb4ee6e85f18e7caa74271bd74a72" target="_blank">e89ec26</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/344db967ceb9f2d38121d7e1a298e6c30a245d5b" target="_blank">344db96</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -407,14 +407,12 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    hub-ensemble/.Rhistory
     Ignored:    hub-ensemble/.Rproj.user/
 
-Untracked files:
-    Untracked:  hub-ensemble/analysis/references.bib
-
 Unstaged changes:
-    Modified:   hub-ensemble/analysis/background.Rmd
-    Modified:   hub-ensemble/analysis/methods.Rmd
+    Modified:   hub-ensemble/analysis/results.Rmd
+    Modified:   hub-ensemble/code/get-model-eval.R
 
 </code></pre>
 <p>
@@ -453,6 +451,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/epiforecasts/covid19-forecast-hub-europe-research/344db967ceb9f2d38121d7e1a298e6c30a245d5b/hub-ensemble/docs/results.html" target="_blank">344db96</a>
+</td>
+<td>
+kathsherratt
+</td>
+<td>
+2021-12-02
+</td>
+<td>
+formatting + start a bib file
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -496,28 +511,33 @@ use workflowr
 </div>
 <div id="component-models" class="section level2">
 <h2>Component models</h2>
-<p>Text describing number of models over time.</p>
-<div id="performance-of-a-median-ensemble" class="section level4">
-<h4>Performance of a median ensemble</h4>
+<p>We scored all forecasts submitted weekly in real time over the 36 week period from 08 March to 15 November 2021. Each week, forecasts could predict incident cases and deaths, for 32 locations over the following 4 weeks, creating 256 possible forecast targets. We received 43 unique forecasting models from 36 separate forecasting teams. We added an ensemble model using all available forecasts for each possible target.</p>
+<p>We used this dataset to create 3998 forecasting scores, each summarising a unique combination of model, variable, country, and week ahead horizon. Not all teams forecast for all targets, nor across all quantiles of the predictive distribution for each target. 37 models provided sufficient quantiles that we could evaluate them using the relative weighted interval score (WIS).</p>
+<p>The ensemble model performed well compared to each original forecast model score. The ensemble performed better on relative WIS than 66% model scores when forecasting cases (n=1832), and 67 scores for forecasts of incident deaths (n=1832).</p>
 <div class="figure" style="text-align: center">
-<img src="figure/results.Rmd/figure-model-by-location-1.png" alt="Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), by country, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. Performance measured by relative weighted interval score scaled against baseline. Boxplots show interquartile range, with outliers as faded points, and ensemble model performance marked by asterisk." width="672" />
+<img src="figure/results.Rmd/figure-model-by-horizon-1.png" alt="Figure #: Performance of short-term forecasts, by relativeinterval score (relative to a baseline forecast, top) and coverage of the 0.5 interval (the proportion of observed values that fell within the predicted50% range, bottom). The scores of each model (grey) and ensemble (red) areaveraged across all forecast targets and shown by one- to four-week ahead horizon." width="672" />
 <p class="caption">
-Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), by country, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. Performance measured by relative weighted interval score scaled against baseline. Boxplots show interquartile range, with outliers as faded points, and ensemble model performance marked by asterisk.
+Figure #: Performance of short-term forecasts, by relativeinterval score (relative to a baseline forecast, top) and coverage of the 0.5 interval (the proportion of observed values that fell within the predicted50% range, bottom). The scores of each model (grey) and ensemble (red) areaveraged across all forecast targets and shown by one- to four-week ahead horizon.
 </p>
 </div>
-<p>Figure # results text: Weekly ensemble (asterisk) generally among the best models in each country and beating the baseline in most countries</p>
+<p>The ensemble model outperformed the baseline at one week for both cases and deaths (figure #). For horizons longer than one-week ahead, performance depended on the epidemiological target. Using relative WIS, the ensemble stopped outperforming the baseline at three to four weeks for cases. In contrast, the ensemble outperformed the baseline for deaths at all horizons considered (up to four weeks WIS), with no discernible deterioration in performance. We observed similar trends in performance when considering how well the ensemble calibrated to uncertainty. At one week the case ensemble was well calibrated (ca. 50% nominal coverage), but this did not hold with increasing forecast horizon. The death ensemble was well calibrated at the 95% level for all horizons and under confident for the 50% level, with only slow deterioration with increasing forecast horizon.</p>
 <div class="figure" style="text-align: center">
-<img src="figure/results.Rmd/figure-model-by-horizon-1.png" alt="Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), by week ahead horizon,, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. Performance measured by relative weighted interval score scaled against baseline (left) and coverage (right)." width="672" />
+<img src="figure/results.Rmd/figure-model-by-location-1.png" alt="Figure #: Performance of short-term forecasts across models andmedian ensemble (asterisk), by country, forecasting cases (top) and deaths(bottom) at 2 weeks ahead. Performance measured by relative weighted interval score scaled against baseline. Boxplots show interquartile range, withoutliers as faded points, and ensemble model performance marked by asterisk." width="672" />
 <p class="caption">
-Figure #: Performance of short-term forecasts across models and median ensemble (asterisk), by week ahead horizon,, forecasting cases (top) and deaths (bottom) at 2 weeks ahead. Performance measured by relative weighted interval score scaled against baseline (left) and coverage (right).
+Figure #: Performance of short-term forecasts across models andmedian ensemble (asterisk), by country, forecasting cases (top) and deaths(bottom) at 2 weeks ahead. Performance measured by relative weighted interval score scaled against baseline. Boxplots show interquartile range, withoutliers as faded points, and ensemble model performance marked by asterisk.
 </p>
 </div>
-<p>Figure # results text:</p>
-</div>
+<p>The ensemble also performed consistently well when forecasting across countries, relative to individual models (figure #).</p>
+<p>The median average of the IQR for each country was # for cases and # for deaths.</p>
+<p>The ensemble outperformed all models in # of 32 locations,</p>
+<p>in all locations outperformed the median score of all models.</p>
+<p>the median performance of all models</p>
+<p>Across # out of # locations, the median ensemble (figure #, asterisk) had the best performing relative WIS compared to the baseline.</p>
+<p>Model performance varied by country (figure #). Some countries (the UK, Portugal, Belgium) had a much narrower distribution of model scores .</p>
 </div>
 <div id="alternative-ensemble-methods" class="section level2">
 <h2>Alternative ensemble methods</h2>
-<p>Figure # results text:</p>
+<p>Figure # results text: Models forecasting incident cases had more variable scores than forecasts for incidence of death.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -542,29 +562,29 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] covidHubUtils_0.1.6 readr_2.1.0         purrr_0.3.4        
- [4] gghighlight_0.3.2   patchwork_1.1.1     forcats_0.5.1      
- [7] ggplot2_3.3.5       tidyr_1.1.4         dplyr_1.0.7        
-[10] here_1.0.1         
+ [1] covidHubUtils_0.1.6 readr_2.1.0         gghighlight_0.3.2  
+ [4] patchwork_1.1.1     forcats_0.5.1       ggplot2_3.3.5      
+ [7] purrr_0.3.4         lubridate_1.8.0     tidyr_1.1.4        
+[10] dplyr_1.0.7         here_1.0.1         
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.7         lubridate_1.8.0    assertthat_0.2.1   rprojroot_2.0.2   
- [5] digest_0.6.28      foreach_1.5.1      utf8_1.2.2         R6_2.5.1          
- [9] evaluate_0.14      highr_0.9          httr_1.4.2         pillar_1.6.4      
-[13] rlang_0.4.11       rstudioapi_0.13    whisker_0.4        jquerylib_0.1.4   
-[17] rmarkdown_2.11     labeling_0.4.2     stringr_1.4.0      bit_4.0.4         
-[21] munsell_0.5.0      compiler_4.0.4     httpuv_1.6.3       xfun_0.28         
-[25] pkgconfig_2.0.3    htmltools_0.5.2    tidyselect_1.1.1   tibble_3.1.6      
-[29] workflowr_1.6.2    codetools_0.2-18   fansi_0.5.0        crayon_1.4.2      
-[33] tzdb_0.2.0         withr_2.4.2        later_1.3.0        grid_4.0.4        
-[37] jsonlite_1.7.2     gtable_0.3.0       lifecycle_1.0.1    DBI_1.1.1         
-[41] git2r_0.29.0       magrittr_2.0.1     scales_1.1.1       cli_3.1.0         
-[45] stringi_1.7.5      vroom_1.5.6        farver_2.1.0       fs_1.5.0          
-[49] promises_1.2.0.1   doParallel_1.0.16  bslib_0.3.1        ellipsis_0.3.2    
-[53] generics_0.1.1     vctrs_0.3.8        RColorBrewer_1.1-2 iterators_1.0.13  
-[57] tools_4.0.4        bit64_4.0.5        glue_1.5.0         hms_1.1.1         
-[61] parallel_4.0.4     fastmap_1.1.0      yaml_2.2.1         colorspace_2.0-2  
-[65] knitr_1.36         sass_0.4.0        </code></pre>
+ [1] Rcpp_1.0.7         assertthat_0.2.1   rprojroot_2.0.2    digest_0.6.28     
+ [5] foreach_1.5.1      utf8_1.2.2         R6_2.5.1           evaluate_0.14     
+ [9] highr_0.9          httr_1.4.2         pillar_1.6.4       rlang_0.4.11      
+[13] rstudioapi_0.13    whisker_0.4        jquerylib_0.1.4    rmarkdown_2.11    
+[17] labeling_0.4.2     stringr_1.4.0      bit_4.0.4          munsell_0.5.0     
+[21] compiler_4.0.4     httpuv_1.6.3       xfun_0.28          pkgconfig_2.0.3   
+[25] htmltools_0.5.2    tidyselect_1.1.1   tibble_3.1.6       workflowr_1.6.2   
+[29] codetools_0.2-18   fansi_0.5.0        crayon_1.4.2       tzdb_0.2.0        
+[33] withr_2.4.2        later_1.3.0        grid_4.0.4         jsonlite_1.7.2    
+[37] gtable_0.3.0       lifecycle_1.0.1    DBI_1.1.1          git2r_0.29.0      
+[41] magrittr_2.0.1     scales_1.1.1       cli_3.1.0          stringi_1.7.5     
+[45] vroom_1.5.6        farver_2.1.0       fs_1.5.0           promises_1.2.0.1  
+[49] doParallel_1.0.16  bslib_0.3.1        ellipsis_0.3.2     generics_0.1.1    
+[53] vctrs_0.3.8        RColorBrewer_1.1-2 iterators_1.0.13   tools_4.0.4       
+[57] bit64_4.0.5        glue_1.5.0         hms_1.1.1          parallel_4.0.4    
+[61] fastmap_1.1.0      yaml_2.2.1         colorspace_2.0-2   knitr_1.36        
+[65] sass_0.4.0        </code></pre>
 </div>
 </div>
 
