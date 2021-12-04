@@ -1,12 +1,20 @@
 name: "hub-ensemble"
 output_dir: ../docs
 navbar:
-  title: "hub-ensemble"
+  title: "European Covid-19 Forecast Hub: Ensembles"
   left:
   - text: Home
     href: index.html
-  - text: About
+  - text: Abstract
     href: about.html
+  - text: Background
+    href: background.html
+  - text: Methods
+    href: methods.html
+  - text: Results
+    href: results.html
+  - text: Discussion
+    href: discussion.html
   - text: License
     href: license.html
 output:

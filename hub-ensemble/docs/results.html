@@ -247,7 +247,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">hub-ensemble</a>
+      <a class="navbar-brand" href="index.html">European Covid-19 Forecast Hub: Ensembles</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -255,7 +255,19 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Abstract</a>
+</li>
+<li>
+  <a href="background.html">Background</a>
+</li>
+<li>
+  <a href="methods.html">Methods</a>
+</li>
+<li>
+  <a href="results.html">Results</a>
+</li>
+<li>
+  <a href="discussion.html">Discussion</a>
 </li>
 <li>
   <a href="license.html">License</a>
@@ -388,16 +400,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtreed79cbf1e3c4c5a78eb64e3b49846672b5037bedbtargetblankd79cbf1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/d79cbf1e3c4c5a78eb64e3b49846672b5037bedb" target="_blank">d79cbf1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtreeb84518b044a4a724aa044c5e9c68a20c251c29e1targetblankb84518ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/b84518b044a4a724aa044c5e9c68a20c251c29e1" target="_blank">b84518b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtreed79cbf1e3c4c5a78eb64e3b49846672b5037bedbtargetblankd79cbf1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomepiforecastscovid19forecasthubeuroperesearchtreeb84518b044a4a724aa044c5e9c68a20c251c29e1targetblankb84518ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/d79cbf1e3c4c5a78eb64e3b49846672b5037bedb" target="_blank">d79cbf1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/tree/b84518b044a4a724aa044c5e9c68a20c251c29e1" target="_blank">b84518b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -411,8 +423,8 @@ Ignored files:
     Ignored:    hub-ensemble/.Rproj.user/
 
 Unstaged changes:
+    Modified:   hub-ensemble/analysis/_site.yml
     Modified:   hub-ensemble/analysis/results.Rmd
-    Modified:   hub-ensemble/code/get-ensemble-eval.R
 
 </code></pre>
 <p>
@@ -451,6 +463,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/epiforecasts/covid19-forecast-hub-europe-research/blob/b84518b044a4a724aa044c5e9c68a20c251c29e1/hub-ensemble/analysis/results.Rmd" target="_blank">b84518b</a>
+</td>
+<td>
+kathsherratt
+</td>
+<td>
+2021-12-04
+</td>
+<td>
+update results
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/epiforecasts/covid19-forecast-hub-europe-research/b84518b044a4a724aa044c5e9c68a20c251c29e1/hub-ensemble/docs/results.html" target="_blank">b84518b</a>
+</td>
+<td>
+kathsherratt
+</td>
+<td>
+2021-12-04
+</td>
+<td>
+update results
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -566,7 +612,7 @@ Figure #: Performance of short-term forecasts across models and median ensemble 
 Figure #: Performance of alternative ensemble methods at 2 week horizon, showing mean difference (triangle) in relative weighted interval score, with 48% and 96% probability (thick and thin line respectively). The difference in WIS is a comparison of scores from forecasts made from all possible combinations of methods, with a single element of ensemble method input changed. Reference categories are: weighted v. unweighted (n=250); median v. mean (n=376); cutoff by WIS v. all models included (n=374); relative WIS measures over 10 weeks of forecast history vs. all forecasts (n=248)
 </p>
 </div>
-<p>At the two-week ahead horizon, variations in ensemble methods made little difference to forecast scores. Ensembles that weighted forecasts showed no difference in performance to simple unweighted ensemble methods. Similarly, in choosing a method with which to weight forecasts, the choice of whether the use scores across all past forecasts, or scores evaluating only the most recent 10 weeks’ forecast scores, made very little difference to the performance of the resulting ensemble (0 mean change in forecast score). The choice to exclude any forecast that scored worse than the baseline forecast (“cut off”) affected the performance of the ensemble in both directions, overall slightly worsening performance (+0.07 relative WIS). Using the median average was the only variation of ensemble method that improved performance, compared to using the mean average across any combination of ensemble method.</p>
+<p>At the two-week ahead horizon, variations in ensemble methods made little difference to forecast scores. Ensembles that weighted forecasts showed no difference in performance to simple unweighted ensemble methods. Similarly, in choosing a method with which to weight forecasts, the choice of whether the use scores across all past forecasts, or scores evaluating only the most recent 10 weeks’ forecast scores, made very little difference to the performance of the resulting ensemble (0 mean change in forecast score). The choice to exclude any forecast that scored worse than the baseline forecast (“cut off”) affected the performance of the ensemble in both directions, overall slightly worsening performance (+0.07 relative WIS). Using the median average was the only variation of ensemble method that typically improved performance, compared to using the mean average across any combination of ensemble method.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
