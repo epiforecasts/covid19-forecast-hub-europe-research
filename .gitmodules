@@ -1,3 +1,6 @@
 [submodule "covid19-forecast-hub-europe"]
 	path = covid19-forecast-hub-europe
 	url = https://github.com/epiforecasts/covid19-forecast-hub-europe
+[submodule "euro-hub-ensemble"]
+	path = euro-hub-ensemble
+	url = https://github.com/kathsherratt/euro-hub-ensemble
