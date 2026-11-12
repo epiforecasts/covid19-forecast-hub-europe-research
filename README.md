@@ -1,3 +1,5 @@
+> **Archived.** No longer maintained; last updated December 2021.
+
 #### Analysis of forecasts in the [European Covid-19 Forecast Hub](https://github.com/epiforecasts/covid19-forecast-hub-europe)
 
 ##### Working with the main hub repository
